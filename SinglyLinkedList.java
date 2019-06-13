@@ -106,12 +106,15 @@ public class SinglyLinkedList {
 
 
 	public void deleteByValue(int value) {
+		if(headNode==null) {
+			return;
+		}
 		Node p = headNode;
 		
 		if(headNode.getValue==value) {
 			headNode = headNode.getNextNode();
 		} else {
-			while(p!=null && p.getNextNode().getValue()!=value) {
+			while(p!=null &&  p.getNextNode()!=null && p.getNextNode().getValue()!=value) {
                         	p = p.getNextNode();
                 	}
 			
@@ -122,6 +125,57 @@ public class SinglyLinkedList {
 			p.setNextNode(p.getNextNode().getNextNode());
 		}
 	}
+
+	public void printAll(){
+		Node p = headNode;
+		while(p!=null) {
+			System.out.println(p.getValue());
+			p=p.getNextNode();
+		}
+	}
+
+
+
+	public boolean palindrome() {
+		Node fastNode = headNode;
+		Node lowNode = headNode;
+		Node pre = null;
+
+		//找到中间节点，以及下一个节点
+		while(fastNode!=null && fastNode.getNextNode()!=null) {
+			fastNode = fastNode.getNextNode().getNextNode();
+			pre = lowNode;
+			lowNode =lowNode.getNextNode();
+		}
+
+		if(pre == null) {
+			return true;
+		}
+
+		if(fastNode==null) {  //单数
+                       
+		} else {
+
+		}
+
+		//找到中间节点，以及下一个节点
+
+	        //反转节点
+
+		//开始比较
+
+		//恢复数据
+
+		
+	}
+
+	private void inverse(Node node) {
+		
+		while(node!=null) {
+			node.getNextNode();
+		}
+	}
+
 
 	public class Node {
 
