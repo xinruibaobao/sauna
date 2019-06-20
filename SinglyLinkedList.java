@@ -25,6 +25,8 @@ public class SinglyLinkedList {
 			node = node.getNextNode();
 			i++;
 		}
+		
+		return null;
 	}
 
 	public void insertToHead(Node node){
@@ -41,7 +43,7 @@ public class SinglyLinkedList {
 		if(headNode == null){
 			headNode = node;
 		} else {
-			Node p = head;
+			Node p = headNode;
 			while(p.getNextNode()!=null){
 				p = p.getNextNode();
 			}
@@ -74,7 +76,7 @@ public class SinglyLinkedList {
 			headNode.setNextNode(p);	
 		} else {
 			while(p!=null && p.getNextNode()!=node) {
-                        	p = p.getNextNode()；
+                        	p = p.getNextNode();
                 	}
 			
 			if(p== null) {
@@ -111,7 +113,7 @@ public class SinglyLinkedList {
 		}
 		Node p = headNode;
 		
-		if(headNode.getValue==value) {
+		if(headNode.getValue()==value) {
 			headNode = headNode.getNextNode();
 		} else {
 			while(p!=null &&  p.getNextNode()!=null && p.getNextNode().getValue()!=value) {
@@ -137,47 +139,86 @@ public class SinglyLinkedList {
 
 
 	public boolean palindrome() {
+		
+		if(headNode==null) {
+			return false;	
+		}
+		
 		Node fastNode = headNode;
 		Node lowNode = headNode;
 		Node pre = null;
 
-		//找到中间节点，以及下一个节点
+		//到中间节点，以及下一个节点
 		while(fastNode!=null && fastNode.getNextNode()!=null) {
 			fastNode = fastNode.getNextNode().getNextNode();
 			pre = lowNode;
 			lowNode =lowNode.getNextNode();
 		}
 
+		System.out.println("fast node:"+(fastNode==null?"null":fastNode.getValue()));
+		System.out.println("pre node:" + (pre==null?"null":pre.getValue()));
+		System.out.println("low node:" + (lowNode==null?"null":lowNode.getValue()));
+
 		if(pre == null) {
 			return true;
 		}
 
-		if(fastNode==null) {  //单数
-                       
-		} else {
+		//反转节点
+		inverse(pre);		
 
+
+		boolean result = false;
+
+		if(fastNode==null) {  //双数
+         result = compareLinkList(pre,lowNode);
+		} else {
+         result = compareLinkList(pre,lowNode.getNextNode());
 		}
 
-		//找到中间节点，以及下一个节点
-
-	        //反转节点
-
-		//开始比较
-
-		//恢复数据
-
-		
+		return result;
+	  
 	}
 
 	private void inverse(Node node) {
+				Node p = headNode;
+				Node pre = null;
+				while(p!=null) {
+					 Node next=p.getNextNode();
+					 p.setNextNode(pre);
+					 pre = p;
+					 p = next;
+					 
+					 if(pre==node){
+					 	break;	
+					}
+					 
+				}			
+	}
+	
+	private boolean compareLinkList(Node a,Node b) {
+				boolean result = true;
+				while(a!=null && b!=null) {
+					System.out.println("a 节点:"+a.getValue());
+	        System.out.println("b 节点:"+b.getValue());
+					
+					if(a.getValue()!=b.getValue()) {
+						result = false;
+						break;
+					}
+					
+					a = a.getNextNode();
+					b = b.getNextNode();
+				}
 		
-		while(node!=null) {
-			node.getNextNode();
-		}
+				if(a!=null|| b!=null){
+					result = false;
+				}
+		
+				return result;
 	}
 
 
-	public class Node {
+	public static class Node {
 
 		private int value;
 
@@ -195,8 +236,35 @@ public class SinglyLinkedList {
 			return nextNode;
 		}
 
-		public Node setNextNode(Node node) {
+		public void setNextNode(Node node) {
 			nextNode = node;
 		}
 	}
+	
+	public static void main(String args []) {
+			SinglyLinkedList ss = new SinglyLinkedList();
+			//Node headNode = new Node();
+			//headNode.setValue(1);
+			//Node node1 = new Node();
+			//node1.setValue(2);
+			//Node node2 = new Node();
+      //node2.setValue(3);
+		  //Node node3 = new Node();
+			//node3.setValue(2);
+			//Node node4 = new Node();
+			//node4.setValue(1);
+			
+			//headNode.setNextNode(node1);
+			//node1.setNextNode(node2);
+			//node2.setNextNode(node3);
+			//node3.setNextNode(node4);
+			
+			//ss.setHeadNode(headNode);
+			ss.printAll();
+			
+		  System.out.println(ss.palindrome());
+			
+	}
+	
+	
 }
